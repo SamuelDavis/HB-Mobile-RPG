@@ -1,0 +1,190 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/Theme.tres" type="Theme" id=1]
+[ext_resource path="res://src/TemplateLabel.gd" type="Script" id=2]
+[ext_resource path="res://assets/Mobile RPG Mockup.png" type="Texture" id=3]
+[ext_resource path="res://src/Enemy.gd" type="Script" id=4]
+[ext_resource path="res://assets/Rat.png" type="Texture" id=5]
+[ext_resource path="res://assets/Panel9Slice.png" type="Texture" id=6]
+[ext_resource path="res://src/Player.gd" type="Script" id=7]
+[ext_resource path="res://src/Battle.gd" type="Script" id=9]
+
+[node name="Game" type="Node"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 52.0, 70.0, 73.0, 134.0, 137.0 ],
+"_edit_vertical_guides_": [ 3.0, 87.0, 9.0, 81.0 ]
+}
+
+[node name="Battle" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="UI" type="ColorRect" parent="Battle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="Control" parent="Battle/UI"]
+anchor_left = 0.053
+anchor_top = 0.325
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4.77
+margin_top = -3.8147e-06
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Statistics" type="NinePatchRect" parent="Battle/UI/Player"]
+anchor_left = 0.0333333
+anchor_right = 0.966667
+anchor_bottom = 0.166667
+texture = ExtResource( 6 )
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Labels" type="HBoxContainer" parent="Battle/UI/Player/Statistics"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+custom_constants/separation = -1
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelHP" type="Label" parent="Battle/UI/Player/Statistics/Labels"]
+margin_top = 4.0
+margin_right = 27.0
+margin_bottom = 10.0
+size_flags_horizontal = 3
+custom_constants/line_spacing = 0
+text = "%02dhp"
+align = 1
+clip_text = true
+script = ExtResource( 2 )
+
+[node name="LabelAP" type="Label" parent="Battle/UI/Player/Statistics/Labels"]
+margin_left = 26.0
+margin_top = 4.0
+margin_right = 53.0
+margin_bottom = 10.0
+size_flags_horizontal = 3
+text = "%02dap"
+align = 1
+clip_text = true
+script = ExtResource( 2 )
+
+[node name="LabelMP" type="Label" parent="Battle/UI/Player/Statistics/Labels"]
+margin_left = 52.0
+margin_top = 4.0
+margin_right = 80.0
+margin_bottom = 10.0
+size_flags_horizontal = 3
+text = "%02dmp"
+align = 1
+clip_text = true
+script = ExtResource( 2 )
+
+[node name="Actions" type="GridContainer" parent="Battle/UI/Player"]
+anchor_left = 0.1
+anchor_top = 0.194074
+anchor_right = 0.9
+anchor_bottom = 0.759259
+margin_top = 0.0399933
+custom_constants/vseparation = 7
+custom_constants/hseparation = 8
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Attack" type="Button" parent="Battle/UI/Player/Actions"]
+margin_right = 72.0
+margin_bottom = 10.0
+size_flags_horizontal = 3
+text = "Attack"
+
+[node name="Enemy" type="Control" parent="Battle/UI"]
+margin_left = 46.0
+margin_top = 32.0
+margin_right = 46.0
+margin_bottom = 32.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelHP" type="Label" parent="Battle/UI/Enemy"]
+anchor_right = 1.0
+margin_left = -12.0
+margin_top = -26.0
+margin_right = 19.0
+grow_horizontal = 0
+theme = ExtResource( 1 )
+text = "%02dhp"
+align = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Battle/UI/Enemy"]
+texture = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="Battle/UI/Enemy"]
+wait_time = 0.1
+autostart = true
+
+[node name="Messages" type="NinePatchRect" parent="Battle/UI"]
+anchor_left = -0.0222222
+anchor_top = 0.53125
+anchor_right = 1.02222
+anchor_bottom = 0.6875
+margin_top = 52.0
+margin_bottom = 52.0
+texture = ExtResource( 6 )
+draw_center = false
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Battle/UI/Messages"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = -2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mobile RPG Mockup" type="Sprite" parent="Battle"]
+visible = false
+modulate = Color( 1, 1, 1, 0.392157 )
+texture = ExtResource( 3 )
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+[connection signal="pressed" from="Battle/UI/Player/Actions/Attack" to="Battle" method="_on_Sword_pressed"]
+[connection signal="damage_done" from="Battle/UI/Enemy" to="Battle" method="_on_Enemy_damage_done"]
+[connection signal="damage_taken" from="Battle/UI/Enemy" to="Battle" method="_on_Enemy_damage_taken"]
+[connection signal="has_died" from="Battle/UI/Enemy" to="Battle" method="_on_Enemy_has_died"]
+[connection signal="timeout" from="Battle/UI/Enemy/Timer" to="Battle/UI/Enemy" method="_on_Timer_timeout"]
